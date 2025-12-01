@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../services/prefs_service.dart';
-import 'package:movie_app/main.dart'; // pour AuthWrapper
+import 'auth_wrapper.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -79,7 +79,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           padding: const EdgeInsets.only(top: 40.0),
                           child: ElevatedButton(
                             onPressed: () async {
-                              // Marquer onboarding vu puis naviguer
                               await PrefsService().setOnboardingSeen();
                               if (mounted) {
                                 Navigator.of(context).pushReplacement(
