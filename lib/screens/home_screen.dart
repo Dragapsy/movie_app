@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../services/tmdb_service.dart';
 import '../models/movie.dart';
 import '../widgets/movie_card.dart';
 import 'detail_screen.dart';
 import 'watchlist_screen.dart';
 import 'auth_screen.dart';
+import '../providers/theme_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -94,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     Widget body;
     switch (_currentIndex) {
       case 0:
@@ -161,6 +164,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? 'Ma watchlist'
                   : 'Compte',
         ),
+        actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, tp, _) => IconButton(
+              tooltip: tp.isDarkMode ? 'Mode clair' : 'Mode sombre',
+              icon: Icon(tp.isDarkMode ? Icons.light_mode : Icons.dark_mode),
+              onPressed: () => tp.toggleTheme(),
+            ),
+          ),
+        ],
       ),
       body: body,
       bottomNavigationBar: BottomNavigationBar(
