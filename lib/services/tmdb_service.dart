@@ -53,4 +53,20 @@ class TmdbService {
       throw Exception('Erreur lors du chargement des détails du film (${response.statusCode})');
     }
   }
+
+  Future<List<Movie>> searchMovies(String query) async {
+    if (query.trim().isEmpty) return [];
+    final url = _buildUri('search/movie', {
+      'query': query,
+      'include_adult': 'false',
+    });
+    final response = await http.get(url, headers: _headers());
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final List results = data['results'];
+      return results.map((json) => Movie.fromJson(json)).toList();
+    } else {
+      throw Exception('Erreur lors de la recherche (${response.statusCode})');
+    }
+  }
 }
