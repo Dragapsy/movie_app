@@ -27,17 +27,20 @@ class MovieCard extends StatelessWidget {
           Expanded(
             child: Stack(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    imageUrl: movie.posterPath.isNotEmpty
-                        ? '$_imageBase${movie.posterPath}'
-                        : '',
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                Hero(
+                  tag: movie.id, // tag partagé avec l’écran de détail
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: CachedNetworkImage(
+                      imageUrl: movie.posterPath.isNotEmpty
+                          ? '$_imageBase${movie.posterPath}'
+                          : '',
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(Icons.broken_image),
                     ),
-                    errorWidget: (context, url, error) => const Icon(Icons.broken_image),
                   ),
                 ),
                 if (showRemove)

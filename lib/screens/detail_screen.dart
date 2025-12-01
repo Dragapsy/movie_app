@@ -33,9 +33,12 @@ class DetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network('$_imageBase${movie.posterPath}', height: 300, fit: BoxFit.cover),
+                Hero(
+                  tag: movie.id,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network('$_imageBase${movie.posterPath}', height: 300, fit: BoxFit.cover),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(

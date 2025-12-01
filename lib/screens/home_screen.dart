@@ -7,6 +7,7 @@ import 'detail_screen.dart';
 import 'watchlist_screen.dart';
 import 'auth_screen.dart';
 import '../providers/theme_provider.dart';
+import 'movie_search_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -165,6 +166,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   : 'Compte',
         ),
         actions: [
+          if (_currentIndex == 0)
+            IconButton(
+              icon: const Icon(Icons.search),
+              tooltip: 'Recherche',
+              onPressed: () {
+                showSearch(context: context, delegate: MovieSearchDelegate());
+              },
+            ),
           Consumer<ThemeProvider>(
             builder: (context, tp, _) => IconButton(
               tooltip: tp.isDarkMode ? 'Mode clair' : 'Mode sombre',
