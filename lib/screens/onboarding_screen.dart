@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../services/prefs_service.dart';
+import 'package:movie_app/main.dart'; // pour AuthWrapper
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -58,12 +60,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(page['icon'], size: 100, color: Colors.blue),
-                      SizedBox(height: 32),
+                      const SizedBox(height: 32),
                       Text(
                         page['title'],
-                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 32.0),
                         child: Text(
@@ -76,10 +78,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 40.0),
                           child: ElevatedButton(
-                            onPressed: () {
-                              // TODO: Navigate to Auth Wrapper
+                            onPressed: () async {
+                              // Marquer onboarding vu puis naviguer
+                              await PrefsService().setOnboardingSeen();
+                              if (mounted) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (_) => const AuthWrapper()),
+                                );
+                              }
                             },
-                            child: Text('Commencer'),
+                            child: const Text('Commencer'),
                           ),
                         ),
                     ],
@@ -87,7 +95,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             SmoothPageIndicator(
               controller: _controller,
               count: _pages.length,
@@ -98,11 +106,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 dotColor: Colors.grey.shade300,
               ),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
           ],
         ),
       ),
     );
   }
 }
-
